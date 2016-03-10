@@ -29,6 +29,7 @@ pip-delete-this-directory.txt
 
 # Unit test / coverage reports
 htmlcov/
+cover/
 .tox/
 .coverage
 .cache
@@ -56,5 +57,9 @@ docs/_build/
 # Anaconda?
 *.cfg
 
-# Enaml stuff
-__enamlcache__
+.ipynb_checkpoints/
+
+# speckle data
+Duke_data/
+
+.DS_Store
