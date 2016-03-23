@@ -54,12 +54,12 @@ class Stack1DMessenger(AbstractMessenger1D, AbstractMPLMessenger):
     to pass commands down to the gui-independent layer
     """
 
-    def __init__(self, data_list=None, key_list=None, *args, **kwargs):
+    def __init__(self, data_list=None, key_list=None,cmap=None, *args, **kwargs):
         # call up the inheritance toolchain
         super(Stack1DMessenger, self).__init__(*args, **kwargs)
         # init the view
         self._view = Stack1DView(fig=self._fig, data_list=data_list,
-                                 key_list=key_list)
+                                 key_list=key_list, cmap=cmap)
 
         self._ctrl_widget = make_1D_control_box("Stack 1D")
         # connect signals to slots

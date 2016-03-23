@@ -83,7 +83,8 @@ class Stack1DView(AbstractDataView1D, AbstractMPLDataView):
 
         # create the matplotlib axes
         self._ax = self._fig.add_subplot(1, 1, 1)
-        self._ax.set_aspect('equal')
+        # self._ax.set_aspect('equal')
+        self._ax.set_aspect('auto')
         # create an ordered dict of lines that has identical keys as the
         # data_dict
         self._lines_dict = self.default_dict_type()

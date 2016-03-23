@@ -35,17 +35,25 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 from .. import QtCore, QtGui
-from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar  # noqa
+from matplotlib.backends.backend_qt4agg import \
+    FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg import \
+    NavigationToolbar2QT as NavigationToolbar  # noqa
 from matplotlib.figure import Figure
 from matplotlib import colors
 from ...backend.mpl import AbstractMPLDataView
 from .. import AbstractMessenger
 from .. import AbstractDisplayWidget
 
+import matplotlib.backend_bases as mbb
 
 import logging
+
 logger = logging.getLogger(__name__)
+
+
+def key_press(event):
+    return mbb.key_press_handler(event, event.axes.figure.canvas)
 
 
 class AbstractMPLMessenger(AbstractMessenger):
@@ -62,7 +70,7 @@ class AbstractMPLMessenger(AbstractMessenger):
         # set a default view
         self._view = AbstractMPLDataView(fig=self._fig)
 
-    #@QtCore.Slot(colors.Normalize)
+    # @QtCore.Slot(colors.Normalize)
     def sl_update_norm(self, new_norm):
         """
         Updates the normalization function used for the color mapping
@@ -116,6 +124,8 @@ class MPLDisplayWidget(AbstractDisplayWidget):
         layout = QtGui.QVBoxLayout()
         # add the mpl toolbar to the layout
         layout.addWidget(self._mpl_toolbar)
+        canvas.mpl_connect('key_press_event', key_press)
+        print(self._fig, self._fig.canvas, canvas)
         # add the mpl canvas to the layout
         layout.addWidget(self._fig.canvas)
         # add the layout to the widget
